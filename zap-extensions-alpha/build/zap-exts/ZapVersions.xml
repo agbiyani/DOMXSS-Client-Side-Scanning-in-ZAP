@@ -1,0 +1,17 @@
+
+	<addon>domxss</addon>
+	<addon_domxss>
+		<name>Active scanner rules for DOM XSS</name>
+		<description>The release quality Active Scanner rules for DOM XSS</description>
+		<author>ZAP Dev Team</author>
+		<version>1</version>
+		<file>domxss-alpha-1.zap</file>
+		<status>alpha</status>
+		<changes>${zapaddon.changes}</changes>
+		<url>http://sourceforge.net/projects/zaproxy/files/add-ons/domxss-alpha-1.zap/download</url>
+		<info></info>
+		<size>35302052</size>
+		<date>2014-11-24</date>
+		<not-before-version>2.3.0</not-before-version>
+		<not-from-version></not-from-version>
+	</addon_domxss>
