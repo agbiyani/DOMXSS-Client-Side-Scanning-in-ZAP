@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -96,8 +97,19 @@ public class TestDomXSS extends AbstractDomAppPlugin
 		{
 			//driver.get(url);
 			WebElement element = inputElements.get(i);
-			element.sendKeys(attackVector);
-			element.click();
+			try
+			{
+				element.sendKeys(attackVector);
+				element.click();
+			}
+			catch(UnhandledAlertException uae)
+			{
+				throw uae;
+			}
+			catch(WebDriverException wde)
+			{
+				log.debug(wde);
+			}
 			driver.get(url);
 			inputElements = driver.findElements(By.tagName("input"));
 			
@@ -114,9 +126,17 @@ public class TestDomXSS extends AbstractDomAppPlugin
 				driver.get(url);
 				allElements = driver.findElements(By.tagName("div"));
 			}
+			catch(UnhandledAlertException uae)
+			{
+				throw uae;
+			}
 			catch(ElementNotVisibleException enve)
 			{
-				log.debug("Element not visible exception encountered");
+				log.debug(enve);
+			}
+			catch(WebDriverException wde)
+			{
+				log.debug(wde);
 			}
 		}
 	}
@@ -141,7 +161,8 @@ public class TestDomXSS extends AbstractDomAppPlugin
 		}
 		finally
 		{
-			firefoxDriver.close();
+			//firefoxDriver.close();
+			firefoxDriver.quit();
 		}
     	if(System.getProperty("webdriver.chrome.driver") != null)
     	{
@@ -158,7 +179,8 @@ public class TestDomXSS extends AbstractDomAppPlugin
     		}
     		finally
     		{
-    			chromeDriver.close();
+    			//chromeDriver.close();
+    			chromeDriver.quit();
     		}
     	}
     	if(System.getProperty("webdriver.ie.driver") != null)
@@ -176,7 +198,8 @@ public class TestDomXSS extends AbstractDomAppPlugin
     		}
     		finally
     		{
-    			ieDriver.close();
+    			//ieDriver.close();
+    			ieDriver.quit();
     		}
     	}
     }
